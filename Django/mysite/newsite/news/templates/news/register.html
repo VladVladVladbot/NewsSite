@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load news_tags %}
+{% block title %}
+{{ Регистрация }} :: {{ block.super }}
+{% endblock %}
+{% block o%}{% endblock%}
+{% block sidebar %}
+{% endblock %}
+
+{% block content %}
+<h1>Регистрация</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p}}
+    <button type="submit" class="btn btn-primary btn-block">Регистрация</button>
+</form>
+
+{% endblock %}

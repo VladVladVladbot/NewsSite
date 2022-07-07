@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load news_tags %}
+{% block title%} {{ news_item.title }} :: {{ block.super }}{% endblock %}
+
+{% block n%}
+<h1> Новости </h1>
+{% endblock %}
+
+{% block sidebar %}
+{% get_categories as categories %}
+<div class="list-group">
+        {% for item in categories %}
+       <a href= "{{ item.get_absolute_url }}" class="list-group-item list-group-item-action">{{item.title}}
+       <span class="badge badge-primary badge-pill">{{item.cnt}}</span></a>
+         {% endfor %}
+       </div>
+{% endblock %}
+{% block content %}
+    <div class="card mb-3">
+    <div class="card">
+      <h5 class="card-header">
+        Категория: <a href = "{{news_item.category.get_absolute_url}}">{{news_item.category}}</a>
+      </h5>
+      <div class="card-body">
+          {% if news_item.photo %}
+          <img src="{{ news_item.photo.url }}" alt="" width="300" height="200" class="float-right mr-3">
+          {% else %}
+          <img src="https://picsum.photos/id/237/300/200" alt="" class="float-right mr-3">
+          {%endif%}
+            <h5 class="card-title">{{news_item.title}}</h5>
+        <p class="card-text">{{news_item.content}}</p>
+        </div>
+      </div>
+      <div class="card-footer text-muted">
+            {{news_item.created_at|date:"y-m-d H:i"}}
+      </div>
+    </div>
+    </div>
+ </div>
+{% endblock %}

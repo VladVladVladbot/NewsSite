@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load news_tags %}
+{% block title %}
+{{ category.title }} :: {{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+   {% get_categories as categories %}
+<div class="list-group">
+        {% for item in categories %}
+       <a href= "{{ item.get_absolute_url }}" class="list-group-item list-group-item-action">{{item.title}}
+       <span class="badge badge-primary badge-pill">{{item.cnt}}</span></a>
+         {% endfor %}
+       </div>
+{% endblock %}
+
+{% block content %}
+    {% for item in news %}
+    <div class="card mb-3">
+    <div class="card">
+      <h5 class="card-header">
+        Категория: {{item.category.title}}
+      </h5>
+      <div class="card-body">
+        <div class="media">
+          {% if item.photo %}
+          <img src="{{ item.photo.url }}" alt="" width="300" height="200" class="mr-3">
+          {% else %}
+          <img src="https://picsum.photos/id/237/300/200" alt="" class="mr-3">
+          {%endif%}
+          <div class="media-body">
+            <h5 class="card-title">{{item.title}}</h5>
+         <p class="card-text">{{item.content|safe|truncatewords:"30"|linebreaks}}</p>
+        <a href="{{ item.get_absolute_url }}" class="btn btn-primary">Читать</a>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer text-muted">
+            {{item.created_at|date:"y-m-d H:i"}}
+      </div>
+    </div>
+    </div>
+    {% endfor %}
+      </div>
+{% endblock %}
+

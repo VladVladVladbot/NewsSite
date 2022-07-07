@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load news_tags %}
+{% block title%} {{ title }} :: {{ block.super }}{% endblock %}
+    {% block n%}
+  <h1> Новости </h1>
+  {% endblock %}
+{% block sidebar%}
+{% get_categories as categories %}
+<div class="list-group">
+        {% for item in categories %}
+       <a href= "{{ item.get_absolute_url }}" class="list-group-item list-group-item-action">{{item.title}}
+       <span class="badge badge-primary badge-pill">{{item.cnt}}</span></a>
+         {% endfor %}
+       </div>
+{% endblock %}
+
+{% block content %}
+
+    {% for item in page_obj.object_list %}
+        <p>{{ item }}</p>
+    {% endfor %}
+
+{% endblock %}
